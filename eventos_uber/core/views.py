@@ -17,7 +17,11 @@ def eventos(requests):
     first_name = json_list['message']['chat']['first_name']
     chat_id = json_list['message']['chat']['id']
     text_message = json_list['message']['text']
-    print(chat_id)
-    send_message('{}, sua mensagem ao contrário é\n{}'.format(first_name, text_message[::-1]), chat_id)
+    if text_message == 'eventos':
+        send_message(chat_id)
+    else:
+        send_message(chat_id, 'Digite eventos para obter a lista de eventos em SP')
+    # print(chat_id)
+    # send_message('{}, sua mensagem ao contrário é\n{}'.format(first_name, text_message[::-1]), chat_id)
     # return JsonResponse({'status': 'true', 'message': 'worked'})
     return HttpResponse()

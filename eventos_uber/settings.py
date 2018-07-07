@@ -18,10 +18,10 @@ from requests import get, post
 
 TOKEN = config('TOKEN')
 
-URL_WEBHOOK = "https://eventos-uber.herokuapp.com/eventos/"
-URL_SET_WEBHOOK = "https://api.telegram.org/bot{}/setWebhook?url={}".format(TOKEN, URL_WEBHOOK)
-print(URL_SET_WEBHOOK)
-get(URL_SET_WEBHOOK)
+# URL_WEBHOOK = "https://eventos-uber.herokuapp.com/eventos/"
+# URL_SET_WEBHOOK = "https://api.telegram.org/bot{}/setWebhook?url={}".format(TOKEN, URL_WEBHOOK)
+# print(URL_SET_WEBHOOK)
+# get(URL_SET_WEBHOOK)
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
