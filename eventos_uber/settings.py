@@ -13,6 +13,15 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 from decouple import config, Csv
 from dj_database_url import parse as dburl
+from requests import get, post
+
+
+TOKEN = config('TOKEN')
+
+URL_WEBHOOK = "https://eventos-uber.herokuapp.com/eventos/"
+URL_SET_WEBHOOK = "https://api.telegram.org/bot{}/setWebhook?url={}".format(TOKEN, URL_WEBHOOK)
+print(URL_SET_WEBHOOK)
+get(URL_SET_WEBHOOK)
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
