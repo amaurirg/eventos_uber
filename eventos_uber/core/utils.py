@@ -61,9 +61,15 @@ else:
 				file_eventos.write('\n')
 
 
-def send_message(chat_id, *args):
+def send_arquive(chat_id):
 	with open(arquivo) as file_eventos:
 		texto = file_eventos.read()
 	data = {'chat_id': chat_id, 'text': texto}
+	url = 'https://api.telegram.org/bot{}/sendMessage'.format(TOKEN)
+	requests.post(url, data = data)
+
+
+def send_message(chat_id, text):
+	data = {'chat_id': chat_id, 'text': text}
 	url = 'https://api.telegram.org/bot{}/sendMessage'.format(TOKEN)
 	requests.post(url, data = data)
