@@ -36,7 +36,7 @@ def evento(src):
 	if qtde_dias.days > 5:
 		return 'FIM'
 	else:
-		return [title, (' - ').join(data), local, endereco, '\n']
+		return [title, (' - ').join(data), local, endereco]
 
 
 data_atual = datetime.datetime.now().strftime('%d/%m/%Y')
@@ -58,6 +58,7 @@ else:
 			with open(arquivo, 'a') as file_eventos:
 				for event in evento(link):
 					file_eventos.write(event + '\n')
+				file_eventos.write('\n')
 
 
 def send_message(chat_id, *args):
