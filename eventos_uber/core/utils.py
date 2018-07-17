@@ -2,6 +2,7 @@ from decouple import config
 import datetime
 import requests, bs4, re
 
+from eventos_uber.core.models import EventosSP
 
 TOKEN = config('TOKEN')
 arquivo = './eventos.txt'
@@ -33,32 +34,35 @@ def evento(src):
 	mes = calendario[sep[-1]]
 	data_evento = datetime.datetime(2018, mes, dia, 0, 0, 0)
 	qtde_dias = data_evento - datetime.datetime.now()
-	if qtde_dias.days > 5:
+	if qtde_dias.days == 3:
 		return 'FIM'
 	else:
+		EventosSP.objects.create(titulo=title, data=(' - ').join(data), local=local, endereco=endereco)
 		return [title, (' - ').join(data), local, endereco]
 
 
-data_atual = datetime.datetime.now().strftime('%d/%m/%Y')
-with open(arquivo) as file_eventos:
-	texto = file_eventos.read()
-	data_atualizacao = re.search(r'[0-9]{2}/[0-9]{2}/[0-9]{4}', texto)
-if data_atualizacao.group() == datetime.datetime.now().strftime('%d/%m/%Y'):
-	# print('Já está atualizado')
-	pass
-else:
-	with open(arquivo, 'w') as file_eventos:
-		file_eventos.write('Eventos em SP\nAtualizado em {}\n\n\n'.format(data_atual))
-	boxes = page.find('ul', {'class': 'galeria destaque'}).find_all('a')
-	for i in boxes:
-		link = url_base + i.get('href')
-		if evento(link) == 'FIM':
-			break
-		else:
-			with open(arquivo, 'a') as file_eventos:
-				for event in evento(link):
-					file_eventos.write(event + '\n')
-				file_eventos.write('\n')
+# data_atual = datetime.datetime.now()
+# data_dia_seguinte = datetime.timedelta(days=1)
+
+# with open(arquivo) as file_eventos:
+# 	texto = file_eventos.read()
+# 	data_atualizacao = re.search(r'[0-9]{2}/[0-9]{2}/[0-9]{4}', texto)
+# if data_atualizacao.group() == data_dia_seguinte.strftime('%d/%m/%Y'):
+# 	# print('Já está atualizado')
+# 	pass
+# else:
+# 	with open(arquivo, 'w') as file_eventos:
+# 		file_eventos.write('Eventos em SP\nAtualizado em {}\n\n\n'.format(data_atual.strftime('%d/%m/%Y')))
+# 	boxes = page.find('ul', {'class': 'galeria destaque'}).find_all('a')
+# 	for i in boxes:
+# 		link = url_base + i.get('href')
+# 		if evento(link) == 'FIM':
+# 			break
+# 		else:
+# 			with open(arquivo, 'a') as file_eventos:
+# 				for event in evento(link):
+# 					file_eventos.write(event + '\n')
+# 				file_eventos.write('\n')
 
 
 def send_arquive(chat_id):
@@ -73,3 +77,8 @@ def send_message(chat_id, text):
 	data = {'chat_id': chat_id, 'text': text}
 	url = 'https://api.telegram.org/bot{}/sendMessage'.format(TOKEN)
 	requests.post(url, data = data)
+
+
+boxes = page.find('ul', {'class': 'galeria destaque'}).find_all('a')
+for i in boxes:
+	link = url_base + i.get('href')
