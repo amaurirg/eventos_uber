@@ -83,5 +83,9 @@ def testedb():
 	boxes = page.find('ul', {'class': 'galeria destaque'}).find_all('a')
 	for i in boxes:
 		link = url_base + i.get('href')
-
-	EventosSP.objects.create(titulo='title', data='data', local='local', endereco='endereco')
+		if evento(link) == 'FIM':
+					break
+		else:
+			for event in evento(link):
+				for i in event:
+					EventosSP.objects.create(titulo=i[0], data=i[1], local=i[2], endereco=i[3])
