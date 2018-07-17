@@ -85,7 +85,7 @@ def testedb(chat_id):
 		link = url_base + i.get('href')
 		send_message(chat_id, link)
 		for event in evento(link):
-			send_message(chat_id, event)
-			for i in event:
-				send_message(chat_id, i)
-				EventosSP.objects.create(titulo=i[0], data=i[1], local=i[2], endereco=i[3])
+		# 	send_message(chat_id, event)
+		# 	for i in event:
+		# 		send_message(chat_id, i)
+			EventosSP.objects.create(titulo=i[0], data=i[1], local=i[2], endereco=i[3])

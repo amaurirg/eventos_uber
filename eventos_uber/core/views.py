@@ -16,7 +16,7 @@ def eventos(requests):
     text_message = json_list['message']['text']
     if text_message == 'eventos' or text_message == 'Eventos':
         send_message(chat_id, 'Carregando eventos ...')
-        send_arquive(chat_id)
+        # send_arquive(chat_id)
         testedb(chat_id)
     else:
         send_message(chat_id, 'Digite eventos para obter a lista de eventos em SP')
