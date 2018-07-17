@@ -79,8 +79,9 @@ def send_message(chat_id, text):
 	requests.post(url, data = data)
 
 
-boxes = page.find('ul', {'class': 'galeria destaque'}).find_all('a')
-for i in boxes:
-	link = url_base + i.get('href')
+def testedb():
+	boxes = page.find('ul', {'class': 'galeria destaque'}).find_all('a')
+	for i in boxes:
+		link = url_base + i.get('href')
 
-EventosSP.objects.create(titulo='title', data='data', local='local', endereco='endereco')
+	EventosSP.objects.create(titulo='title', data='data', local='local', endereco='endereco')
