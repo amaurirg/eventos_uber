@@ -80,12 +80,13 @@ def send_message(chat_id, text):
 
 
 def testedb(chat_id):
-	boxes = page.find('ul', {'class': 'galeria destaque'}).find_all('a')
-	for i in boxes:
-		link = url_base + i.get('href')
-		send_message(chat_id, link)
-		for event in evento(link):
-		# 	send_message(chat_id, event)
-		# 	for i in event:
-		# 		send_message(chat_id, i)
-			EventosSP.objects.create(titulo=i[0], data=i[1], local=i[2], endereco=i[3])
+	pass
+	# boxes = page.find('ul', {'class': 'galeria destaque'}).find_all('a')
+	# for i in boxes:
+	# 	link = url_base + i.get('href')
+	#
+	# 	for event in evento(link):
+	# 		send_message(chat_id, event)
+	# 		for i in event:
+	# 	# 		send_message(chat_id, i)
+	# 			EventosSP.objects.create(titulo=i[0], data=i[1], local=i[2], endereco=i[3])
