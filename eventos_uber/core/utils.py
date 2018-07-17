@@ -16,6 +16,20 @@ calendario = {'Janeiro': 1, 'Fevereiro': 2, 'Março': 3, 'Abril': 4, 'Maio': 5, 
               'Agosto': 8, 'Setembro': 9, 'Outubro': 10, 'Novembro': 11, 'Dezembro': 12}
 
 
+def send_arquive(chat_id):
+	with open(arquivo) as file_eventos:
+		texto = file_eventos.read()
+	data = {'chat_id': chat_id, 'text': texto}
+	url = 'https://api.telegram.org/bot{}/sendMessage'.format(TOKEN)
+	requests.post(url, data = data)
+
+
+def send_message(chat_id, text):
+	data = {'chat_id': chat_id, 'text': text}
+	url = 'https://api.telegram.org/bot{}/sendMessage'.format(TOKEN)
+	requests.post(url, data = data)
+
+
 def evento(src):
 	res_ev = requests.get(src)
 	res_ev.raise_for_status()
@@ -37,8 +51,8 @@ def evento(src):
 	# if qtde_dias.days == 3:
 	# 	return 'FIM'
 	# else:
-	EventosSP.objects.create(titulo='title', data='data', local='local', endereco='endereco')
-	EventosSP.objects.create(titulo=title, data=(' - ').join(data), local=local, endereco=endereco)
+	# EventosSP.objects.create(titulo='title', data='data', local='local', endereco='endereco')
+	# EventosSP.objects.create(titulo=title, data=(' - ').join(data), local=local, endereco=endereco)
 	return [title, (' - ').join(data), local, endereco]
 
 
@@ -66,28 +80,14 @@ def evento(src):
 # 				file_eventos.write('\n')
 
 
-def send_arquive(chat_id):
-	with open(arquivo) as file_eventos:
-		texto = file_eventos.read()
-	data = {'chat_id': chat_id, 'text': texto}
-	url = 'https://api.telegram.org/bot{}/sendMessage'.format(TOKEN)
-	requests.post(url, data = data)
-
-
-def send_message(chat_id, text):
-	data = {'chat_id': chat_id, 'text': text}
-	url = 'https://api.telegram.org/bot{}/sendMessage'.format(TOKEN)
-	requests.post(url, data = data)
-
-
 def testedb(chat_id):
 	# pass
 	boxes = page.find('ul', {'class': 'galeria destaque'}).find_all('a')
 	for i in boxes:
 		link = url_base + i.get('href')
-		# evento(link)
-	# 	for event in evento(link):
-		send_message(chat_id, evento(link))
+		event = evento(link)
+		for i in event:
+			send_message(chat_id, i)
 	# 		for i in event:
 	# 	# 		send_message(chat_id, i)
 	# 			EventosSP.objects.create(titulo=i[0], data=i[1], local=i[2], endereco=i[3])
