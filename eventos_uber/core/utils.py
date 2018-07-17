@@ -33,12 +33,12 @@ def evento(src):
 	dia = int(sep[1])
 	mes = calendario[sep[-1]]
 	data_evento = datetime.datetime(2018, mes, dia, 0, 0, 0)
-	qtde_dias = data_evento - datetime.datetime.now()
-	if qtde_dias.days == 3:
-		return 'FIM'
-	else:
-		EventosSP.objects.create(titulo=title, data=(' - ').join(data), local=local, endereco=endereco)
-		return [title, (' - ').join(data), local, endereco]
+	# qtde_dias = data_evento - datetime.datetime.now()
+	# if qtde_dias.days == 3:
+	# 	return 'FIM'
+	# else:
+	EventosSP.objects.create(titulo=title, data=(' - ').join(data), local=local, endereco=endereco)
+	return [title, (' - ').join(data), local, endereco]
 
 
 # data_atual = datetime.datetime.now()
@@ -79,13 +79,13 @@ def send_message(chat_id, text):
 	requests.post(url, data = data)
 
 
-def testedb():
+def testedb(chat_id):
 	boxes = page.find('ul', {'class': 'galeria destaque'}).find_all('a')
 	for i in boxes:
 		link = url_base + i.get('href')
-		if evento(link) == 'FIM':
-					break
-		else:
-			for event in evento(link):
-				for i in event:
-					EventosSP.objects.create(titulo=i[0], data=i[1], local=i[2], endereco=i[3])
+		send_message(chat_id, link)
+		for event in evento(link):
+			send_message(chat_id, event)
+			for i in event:
+				send_message(chat_id, i)
+				EventosSP.objects.create(titulo=i[0], data=i[1], local=i[2], endereco=i[3])
