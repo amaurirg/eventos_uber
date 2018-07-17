@@ -29,14 +29,15 @@ def evento(src):
 	local = loc[0]
 	a = re.split(r'-', data_hora)
 	data = [i.strip() for i in a]
-	sep = data[0].split()
-	dia = int(sep[1])
-	mes = calendario[sep[-1]]
-	data_evento = datetime.datetime(2018, mes, dia, 0, 0, 0)
+	# sep = data[0].split()
+	# dia = int(sep[1])
+	# mes = calendario[sep[-1]]
+	# data_evento = datetime.datetime(2018, mes, dia, 0, 0, 0)
 	# qtde_dias = data_evento - datetime.datetime.now()
 	# if qtde_dias.days == 3:
 	# 	return 'FIM'
 	# else:
+	EventosSP.objects.create(titulo='title', data='data', local='local', endereco='endereco')
 	EventosSP.objects.create(titulo=title, data=(' - ').join(data), local=local, endereco=endereco)
 	return [title, (' - ').join(data), local, endereco]
 
@@ -80,13 +81,13 @@ def send_message(chat_id, text):
 
 
 def testedb(chat_id):
-	pass
-	# boxes = page.find('ul', {'class': 'galeria destaque'}).find_all('a')
-	# for i in boxes:
-	# 	link = url_base + i.get('href')
-	#
+	# pass
+	boxes = page.find('ul', {'class': 'galeria destaque'}).find_all('a')
+	for i in boxes:
+		link = url_base + i.get('href')
+		# evento(link)
 	# 	for event in evento(link):
-	# 		send_message(chat_id, event)
+		send_message(chat_id, evento(link))
 	# 		for i in event:
 	# 	# 		send_message(chat_id, i)
 	# 			EventosSP.objects.create(titulo=i[0], data=i[1], local=i[2], endereco=i[3])
